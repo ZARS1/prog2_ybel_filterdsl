@@ -157,32 +157,6 @@ Getestet werden unter anderem:
 
 Die Tests helfen dabei, die Struktur des erzeugten AST unabhängig von der Benutzeroberfläche zu prüfen.
 
-## Anpassung an Java 21
-
-Die Projektvorlage verwendete einzelne Funktionen, die eine neuere Java-Version oder Vorschaufeatures voraussetzten.
-
-Für die Ausführung mit Java 21 wurden unter anderem folgende Stellen angepasst:
-
-```java
-_ -> action()
-```
-
-wurde ersetzt durch:
-
-```java
-event -> action()
-```
-
-Außerdem wurden Ausgaben mit `IO.println` durch `System.out.println` ersetzt.
-
-## Ausführung
-
-Projekt formatieren und testen:
-
-```powershell
-.\gradlew.bat spotlessApply
-.\gradlew.bat clean build
-```
 
 Anwendung starten:
 
