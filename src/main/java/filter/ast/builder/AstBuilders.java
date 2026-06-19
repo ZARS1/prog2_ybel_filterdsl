@@ -14,7 +14,24 @@ public class AstBuilders {
   }
 
   public static Expr simplify(Expr e) {
-    // TODO
+    if (e instanceof Expr.Not not) {
+      Expr inner = simplify(not.inner());
+
+      if (inner instanceof Expr.Not doubleNot) {
+        return simplify(doubleNot.inner());
+      }
+
+      return new Expr.Not(inner);
+    }
+
+    if (e instanceof Expr.And and) {
+      return new Expr.And(simplify(and.left()), simplify(and.right()));
+    }
+
+    if (e instanceof Expr.Or or) {
+      return new Expr.Or(simplify(or.left()), simplify(or.right()));
+    }
+
     return e;
   }
 
@@ -25,8 +42,9 @@ public class AstBuilders {
     var parser = new FilterParser(tokens);
 
     var ctx = parser.query();
-    if (parser.getNumberOfSyntaxErrors() > 0)
+    if (parser.getNumberOfSyntaxErrors() > 0) {
       throw new IllegalStateException("Syntax errors in query: " + query);
+    }
 
     return ctx;
   }
